@@ -1,4 +1,4 @@
-# Cloud-Native Microservice & Scaling Demo
+# Docker/Kubernetes Auto Scaling/Descaling Demo
 
 A lightweight, containerized ASP.NET Core Minimal API with a dynamic HTML/JS dashboard, built to demonstrate container isolation, multi-stage Docker builds, and CPU workload stress-testing for cloud infrastructure scalability.
 
@@ -110,5 +110,5 @@ note: New data is shown every 15-30 seconds. Start CPU stress in webapp to obser
 
 ### Credits
 
-  Author: Google Gemini 3.6 Flash
+  Author: Google Gemini 3.6 Flash / 
   Code Review, Architecture & Technical Oversight: Deák András Botond
