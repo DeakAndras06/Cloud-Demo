@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 400px;
+        }
+        h1 { font-size: 1.5rem; margin-bottom: 20px; color: #4facfe; }
+        .btn {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            margin: 8px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn-stress {
+            background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+        }
+        .info-box {
+            margin-top: 20px;
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #00ffcc;
+            min-height: 80px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Cloud Infrastructure Demo</h1>
+        
+        <div class="input-group">
+            <label for="durationInput">CPU stress time (s):</label>
+            <input type="number" id="durationInput" value="5" min="1" max="30">
+        </div>
+
+        <button class="btn" onclick="getInfo()">Get Server Info</button>
+        <button class="btn btn-stress" onclick="triggerStress()">Start CPU Stress</button>
+
+        <div class="info-box" id="output">Click a button to start!</div>
+    </div>
+
+    <script>
+        
+        const API_URL = "https://localhost:7203";
+
+        async function getInfo() {
+            const output = document.getElementById('output');
+            output.innerText = "Loading...";
+            
+            try {
+                const response = await fetch(`${API_URL}/api/info`);
+                const data = await response.json();
+                
+                output.innerHTML = `
+                    <strong>Machine / Pod:</strong> ${data.machineName}<br>
+                    <strong>Server time:</strong> ${new Date(data.serverTime).toLocaleTimeString()}<br>
+                    <strong>Message:</strong> ${data.message}
+                `;
+            } catch (err) {
+                output.innerText = "Error, check the C# app";
+                console.error(err);
+            }
+        }
+
+        async function triggerStress() {
+            const output = document.getElementById('output');
+            output.innerText = "CPU stress in progress (5s)...";
+
+            try {
+                const response = await fetch(`${API_URL}/api/stress?durationSeconds=5`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                output.innerHTML = `
+                    <strong>Status:</strong> ${data.status}<br>
+                    <strong>Running Machine:</strong> ${data.machineName}<br>
+                    <strong>Time elapsed:</strong> ${data.durationSeconds} mp
+                `;
+            } catch (err) {
+                output.innerText = "Error during test!";
+                console.error(err);
+            }
+        }
+        async function triggerStress() {
+    const output = document.getElementById('output');
+    
+    const seconds = document.getElementById('durationInput').value || 5;
+
+    output.innerText = `CPU stress in progress (${seconds}s)...`;
+
+    try {
+        const response = await fetch(`${API_URL}/api/stress?durationSeconds=${seconds}`, {
+            method: 'POST'
+        });
+        const data = await response.json();
+        
+        output.innerHTML = `
+            <strong>Status:</strong> ${data.status}<br>
+            <strong>Running Machine:</strong> ${data.machineName}<br>
+            <strong>Time elapsed:</strong> ${data.durationSeconds} mp
+        `;
+    } catch (err) {
+        output.innerText = "Error during test!";
+        console.error(err);
+    }
+}
+    </script>
+
+</body>
+</html>

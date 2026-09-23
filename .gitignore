@@ -1,0 +1,16 @@
+## .gitignore for ASP.NET Core & Docker Project
+
+# Build outputs
+[Bb]in/
+[Oo]bj/
+out/
+
+# Visual Studio & VS Code
+.vs/
+.vscode/
+*.user
+*.suo
+
+# OS generated files
+.DS_Store
+Thumbs.db
