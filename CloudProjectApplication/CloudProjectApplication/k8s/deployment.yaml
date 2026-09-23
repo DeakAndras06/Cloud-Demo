@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-backend-deployment
+  labels:
+    app: cloud-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cloud-backend
+  template:
+    metadata:
+      labels:
+        app: cloud-backend
+    spec:
+      containers:
+      - name: cloud-backend-container
+        image: cloud-backend:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
