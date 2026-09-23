@@ -13,10 +13,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseRouting();
-
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
+app.UseRouting();
 app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())
