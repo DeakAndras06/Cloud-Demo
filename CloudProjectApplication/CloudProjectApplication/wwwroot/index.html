@@ -72,7 +72,7 @@
 
     <script>
         
-        const API_URL = "https://localhost:7203";
+        const API_URL = "";
 
         async function getInfo() {
             const output = document.getElementById('output');
@@ -95,47 +95,27 @@
 
         async function triggerStress() {
             const output = document.getElementById('output');
-            output.innerText = "CPU stress in progress (5s)...";
+            const seconds = document.getElementById('durationInput').value || 5;
+
+            output.innerText = `CPU stress in progress (${seconds}s)...`;
 
             try {
-                const response = await fetch(`${API_URL}/api/stress?durationSeconds=5`, {
+                const response = await fetch(`${API_URL}/api/stress?durationSeconds=${seconds}`, {
                     method: 'POST'
                 });
                 const data = await response.json();
-                
+
                 output.innerHTML = `
-                    <strong>Status:</strong> ${data.status}<br>
-                    <strong>Running Machine:</strong> ${data.machineName}<br>
-                    <strong>Time elapsed:</strong> ${data.durationSeconds} mp
-                `;
+            <strong>Status:</strong> ${data.status}<br>
+            <strong>Running Machine:</strong> ${data.machineName}<br>
+            <strong>Time elapsed:</strong> ${data.durationSeconds} mp
+        `;
             } catch (err) {
                 output.innerText = "Error during test!";
                 console.error(err);
             }
         }
-        async function triggerStress() {
-    const output = document.getElementById('output');
-    
-    const seconds = document.getElementById('durationInput').value || 5;
-
-    output.innerText = `CPU stress in progress (${seconds}s)...`;
-
-    try {
-        const response = await fetch(`${API_URL}/api/stress?durationSeconds=${seconds}`, {
-            method: 'POST'
-        });
-        const data = await response.json();
         
-        output.innerHTML = `
-            <strong>Status:</strong> ${data.status}<br>
-            <strong>Running Machine:</strong> ${data.machineName}<br>
-            <strong>Time elapsed:</strong> ${data.durationSeconds} mp
-        `;
-    } catch (err) {
-        output.innerText = "Error during test!";
-        console.error(err);
-    }
-}
     </script>
 
 </body>
