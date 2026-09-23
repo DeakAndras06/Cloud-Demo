@@ -68,6 +68,45 @@ The project utilizes a multi-stage Dockerfile to keep the final image minimal an
   docker stop cloud-backend-1 cloud-backend-2 cloud-backend-3
   docker rm cloud-backend-1 cloud-backend-2 cloud-backend-3
   ```
+### Deployment Steps
+
+1. **Start Minikube**
+   ```bash
+   minikube start --driver=docker
+   ```
+2. **Build the Docker Image**
+   ```bash
+   docker build -t cloud-backend:v1 .
+   ```
+3. **Load the Image into Minikube**
+   ```bash
+   minikube image load cloud-backend:v1
+   ```
+4. **Apply Manifests**
+   ```bash
+   kubectl apply -f k8s/
+   ```
+5. **Access**
+   ```bash
+   minikube service cloud-backend-service
+   ```
+note: You will have to open another terminal to continue giving commands
+
+### Monitoring
+
+1. **Get the Add-on**
+   ```bash
+   minikube addons enable metrics-server
+   ```
+2. **Check resource use**
+   ```bash
+   kubectl top pods
+   ```
+3. **Watch it live**
+   ```bash
+   kubectl get hpa cloud-backend-hpa -w
+   ```
+note: New data is shown every 15-30 seconds. Start CPU stress in webapp to observe auto scaling/descaling.
 
 ### Credits
 
