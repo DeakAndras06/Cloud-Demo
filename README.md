@@ -1,4 +1,4 @@
-# Docker/Kubernetes Auto Scaling/Descaling Demo
+# Docker/Kubernetes Auto Scaling Demo with CPU Stresser
 
 A lightweight, containerized ASP.NET Core Minimal API with a dynamic HTML/JS dashboard, built to demonstrate container isolation, multi-stage Docker builds, and CPU workload stress-testing for cloud infrastructure scalability.
 
