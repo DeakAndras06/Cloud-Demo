@@ -110,5 +110,7 @@ note: New data is shown every 15-30 seconds. Start CPU stress in webapp to obser
 
 ### Credits
 
-  Author: Google Gemini 3.6 Flash / 
-  Code Review, Architecture & Technical Oversight: Deák András Botond
+  Co-Author: Google Gemini 3.6 Flash / 
+  Architecture & Technical Oversight: Deák András Botond
+
+  For more info check the documentation.
